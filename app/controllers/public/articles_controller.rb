@@ -1,4 +1,5 @@
 class Public::ArticlesController < ApplicationController
+
   def index
   end
 
@@ -10,4 +11,8 @@ class Public::ArticlesController < ApplicationController
 
   def update
   end
+
+  def create
+  end
 end
+

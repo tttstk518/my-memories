@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   devise_scope :user do
     post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
   end
@@ -12,7 +13,8 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: 'homes#top'
     get 'about' => 'homes#about', as: 'about'
-    resources :articles, only: [:index, :show, :edit, :update]
+    resources :articles
+    get 'users/index' => 'users#index', as: 'users_top'
     get 'users/my_page' => 'users#show', as: 'my_page'
     get 'users/edit' => 'users#edit', as: 'users_edit'
     patch 'users/update' => 'users#update', as: 'users_update'

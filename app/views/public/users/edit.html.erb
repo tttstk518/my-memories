@@ -1,2 +1,10 @@
-<h1>Public::Users#edit</h1>
-<p>Find me in app/views/public/users/edit.html.erb</p>
+<h1>プロフィール編集</h1>
+<%= form_with model: @user, url: users_update_path(@user.id) do |f| %>
+  <label for="inputName">Name</label>
+  <%= f.text_field :name, autofocus: true, id:"inputName", placeholder:"名前"%>
+  <label for="inputEmail">email</label>
+  <%= f.email_field :email, autofocus: true, id:"inputEmail", placeholder:"メールアドレス" %>
+  <label for="inputIntroduction">introduction</label>
+  <%= f.text_field :introduction, autofocus: true, id:"inputIntroduction", placeholder:"自己紹介" %>
+  <%= f.submit "変更を保存" %>
+<% end %>

@@ -1,2 +1,23 @@
-<h1>Admin::Homes#top</h1>
-<p>Find me in app/views/admin/homes/top.html.erb</p>
+<h1>管理者ページ</h1>
+<table class="table">
+  <thead>
+    <tr class="table">
+      <th>会員番号</th>
+      <th>名前</th>
+      <th>メールアドレス</th>
+    </tr>
+  </thead>
+  <tbody class="table">
+    <% @user.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td>
+        <%= link_to admin_user_path(user.id) do %>
+          <%= user.name %>
+        <% end %>
+      </td>
+      <td><%= user.email %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
