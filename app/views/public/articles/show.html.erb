@@ -1,2 +1,14 @@
 <h1>Public::Articles#show</h1>
-<p>Find me in app/views/public/articles/show.html.erb</p>
+<h2>タイトル</h2>
+<p><%= @article.title %></p>
+
+<h2>本文</h2>
+<p><%= @article.text %></p>
+<h2>画像</h2>
+<% if @article.image.attached? %>
+  <%= image_tag @article.image, size: "300x300" %>
+<% else %>
+  <%= image_tag 'no_image', size: "300x300" %>
+<% end %>
+
+<%= link_to "編集", edit_article_path(@article.id) %>

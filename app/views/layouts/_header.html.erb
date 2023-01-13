@@ -1,0 +1,65 @@
+<header style="height: 90px;">
+  <div class="container-fluid" style="">
+    <div class="row m-auto pr-2">
+      <% if user_signed_in? %>
+      <div class="col">
+        <div>ようこそ、<%= current_user.name %> さん！</div>
+      </div>
+      <div class="header_link">
+        <div class="d-grid gap-2 d-md-block">
+          <div class="float-right">
+            <%= link_to users_top_path,class: 'btn btn-secondary' do %>
+              my page
+            <% end %>
+            <%=  link_to favorites_path,class: 'btn btn-secondary' do %>
+              favorites
+            <% end %>
+            <%=  link_to articles_path ,class: 'btn btn-secondary' do %>
+              articles
+            <% end %>
+            <%= link_to destroy_user_session_path, method: :delete,class: 'btn btn-secondary' do %>
+              logout
+            <% end %>
+          </div>
+          <% elsif admin_signed_in? %>
+          <div class="float-right">
+            <%= link_to admin_top_path,class: 'btn btn-secondary' do %>
+              my page
+            <% end %>
+            <%=  link_to admin_users_path,class: 'btn btn-secondary' do %>
+              users
+            <% end %>
+            <%= link_to admin_favorites_path,class: 'btn btn-secondary' do %>
+              favorites
+            <% end %>
+            <%=  link_to admin_genres_path,class: 'btn btn-secondary' do %>
+              genres
+            <% end %>
+            <%= link_to destroy_admin_session_path, method: :delete,class: 'btn btn-secondary' do %>
+              logout
+            <% end %>
+          </div>
+          <% else %>
+            <div class="float-right">
+              <%= link_to about_path,class: 'btn btn-secondary' do %>
+                About
+              <% end %>
+              <%= link_to users_guest_sign_in_path, method: :post,class: 'btn btn-secondary' do %>
+                guest login
+              <% end %>
+              <%= link_to new_user_registration_path,class: 'btn btn-secondary' do %>
+                sign up
+              <% end %>
+              <%= link_to new_user_session_path ,class: 'btn btn-secondary' do %>
+                sign in
+              <% end %>
+            <div>
+            </div>
+            </div>
+          <% end %>
+        </div>
+        <span class="botder border-dark"></span>
+      </div>
+    </div>
+  </div>
+</header>

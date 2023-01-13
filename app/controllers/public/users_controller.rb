@@ -1,9 +1,12 @@
 class Public::UsersController < ApplicationController
 
   def index
+    @user = User.page(params[:page]).per(10)
+    @article = Article.new
   end
 
   def show
+    @user = current_user
   end
 
   def edit
@@ -29,7 +32,8 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(
       :name,
       :email,
-      :introduction
+      :is_deleted,
+      :introduction,
       )
   end
 end
