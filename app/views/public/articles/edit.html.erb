@@ -1,2 +1,17 @@
-<h1>Public::Articles#edit</h1>
-<p>Find me in app/views/public/articles/edit.html.erb</p>
+<h1>編集画面</h1>
+
+<%= form_with model: @article, url: article_path(@article.id), method: :patch do |f| %>
+
+  <h4>タイトル</h4>
+  <%= f.text_field :title %>
+
+  <h4>本文</h4>
+  <%= f.text_area :text %>
+  <div class="field">
+    <%= f.label :genre_id %>
+    <%= f.collection_select( :genre_id, Genre.all, :id, :name ) %>
+  </div>
+
+  <%= f.submit '保存' %>
+
+<% end %>

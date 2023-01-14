@@ -55,11 +55,13 @@ ActiveRecord::Schema.define(version: 2023_01_12_103437) do
   create_table "articles", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "is_delited", null: false
-    t.integer "favorite", null: false
+    t.boolean "is_deleted", null: false
+    t.float "rate", null: false
     t.string "text"
     t.string "title"
     t.integer "user_id", null: false
+    t.string "image"
+    t.string "genre_id", null: false
   end
 
   create_table "comments", force: :cascade do |t|

@@ -2,22 +2,50 @@
   <div class="row mb-3">
     <div class="col">
     <h4>投稿機能</h4>
-    <%= form_with model: @article do |f| %>
-      <div class="form-group">
-        <%= f.label :title %>
-        <%= f.text_field :title %>
+    <%= form_with model: Article.new do |f| %>
+      <div class="field">
+        <%= f.label :genre_id %>
+        <%= f.collection_select( :genre_id, Genre.all, :id, :name ) %>
       </div>
-      <div class="form-group">
-        <%= f.label :text %>
-        <%= f.text_area :text %>
+      <div class="form-group row">
+        <%= f.label :title, 'タイトル', class:'col-md-3 col-form-label' %>
+        <div class="col-md-9">
+          <%= f.text_field :title, class: "form-control" %>
+        </div>
       </div>
-      <div class="form-group">
+      <!-- 評価 -->
+      <div class="form-group row" id="star">
+        <%= f.label :rate,'評価 ', class:'col-md-3 col-form-label' %>
+        <%= f.hidden_field :rate, id: :rate_star %>
+      </div>
+      <!-- 評価javascript -->
+      <script>
+      $('#star').raty({
+        size     : 36,
+        starOff:  '<%= asset_path('star-off.png') %>',
+        starOn : '<%= asset_path('star-on.png') %>',
+        starHalf: '<%= asset_path('star-half.png') %>',
+        scoreName: 'article[rate]',
+        half: true,
+      });
+      </script>
+      <div class="form-group row">
+        <%= f.label :text, '口コミ内容', class:'col-md-3 col-form-label' %>
+        <div class="col-md-9">
+          <%= f.text_area :text, class: "form-control", rows: "8",
+           placeholder:'口コミ内容がなくても、タイトルと評価のみで投稿できます。投稿してから編集もできますよ！' %>
+        </div>
+      </div>
+      <div class="form-group row">
         <%= f.file_field :image, accept: "image/*" %>
       </div>
-      <div class="form-group">
-        <%= f.submit class: 'btn btn-success' %>
+      <div class="form-group row justify-content-end">
+        <div class="col-md-9">
+          <%= f.submit class: 'btn btn-success' %>
+        </div>
       </div>
     <% end %>
+  </script>
     </div>
   </div>
 </div>

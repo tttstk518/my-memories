@@ -5,13 +5,19 @@
     <tr class="table">
       <th>タイトル</th>
       <th>本文</th>
+      <th>Genre</th>
     </tr>
   </thead>
   <tbody class="table">
     <% @articles.each do |article| %>
       <tr>
-        <td><%= article.title %></td>
+        <td>
+          <%= link_to article_path(article.id) do %>
+            <%= article.title %>
+          <% end %>
+        </td>
         <td><%= article.text %> </td>
+        <td><%= article.genre.name %></td>
       </tr>
     <% end %>
   </tbody>
