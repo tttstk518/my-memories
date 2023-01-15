@@ -1,2 +1,23 @@
-<h1>Public::Favorites#index</h1>
-<p>Find me in app/views/public/favorites/index.html.erb</p>
+<table>
+  <caption>Favorites</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Title</th>
+      <th>Memo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @favorites.each do |favorite| %>
+      <tr>
+        <td><%= favorite.article.user.name %></td>
+        <td>
+          <%= link_to article_path(favorite.article) do %>
+            <%= favorite.article.title %>
+          <% end %>
+        </td>
+        <td><%= favorite.article.text %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

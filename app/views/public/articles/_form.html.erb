@@ -1,8 +1,4 @@
-<div class="container">
-  <div class="row mb-3">
-    <div class="col">
-    <h4>投稿機能</h4>
-    <%= form_with model: Article.new do |f| %>
+<%= form_with model: Article.new do |f| %>
       <div class="field">
         <%= f.label :genre_id %>
         <%= f.collection_select( :genre_id, Genre.all, :id, :name ) %>
@@ -16,19 +12,10 @@
       <!-- 評価 -->
       <div class="form-group row" id="star">
         <%= f.label :rate,'評価 ', class:'col-md-3 col-form-label' %>
-        <%= f.hidden_field :rate, id: :rate_star %>
+        <%= f.hidden_field :rate, id: :review_star %>
       </div>
       <!-- 評価javascript -->
-      <script>
-      $('#star').raty({
-        size     : 36,
-        starOff:  '<%= asset_path('star-off.png') %>',
-        starOn : '<%= asset_path('star-on.png') %>',
-        starHalf: '<%= asset_path('star-half.png') %>',
-        scoreName: 'article[rate]',
-        half: true,
-      });
-      </script>
+
       <div class="form-group row">
         <%= f.label :text, '口コミ内容', class:'col-md-3 col-form-label' %>
         <div class="col-md-9">
@@ -44,8 +31,13 @@
           <%= f.submit class: 'btn btn-success' %>
         </div>
       </div>
-    <% end %>
-  </script>
-    </div>
-  </div>
-</div>
+<% end %>     
+<script>
+// 13行目のidが'star'のDOM要素の取得
+var element = document.getElementById('star');
+var option = {
+  starOn: "<%= asset_path('star-on.png') %>",
+  starOff: "<%= asset_path('star-off.png') %>"
+};
+raty(element,option);
+</script>

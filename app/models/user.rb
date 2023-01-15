@@ -3,6 +3,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+         
+  def active_for_authentication?
+    super && (is_deleted == false)
+  end
+  has_many :favorites, dependent: :destroy
 
   #正規表現によって、特定の文字を弾くようにする
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

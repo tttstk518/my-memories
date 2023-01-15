@@ -19,7 +19,7 @@ class Admin::UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to admin_user_path(@user.id)
     else
-      render :show
+      render 'index'
     end
   end
 

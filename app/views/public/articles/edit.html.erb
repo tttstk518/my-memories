@@ -1,17 +1,59 @@
-<h1>編集画面</h1>
-
-<%= form_with model: @article, url: article_path(@article.id), method: :patch do |f| %>
-
-  <h4>タイトル</h4>
-  <%= f.text_field :title %>
-
-  <h4>本文</h4>
-  <%= f.text_area :text %>
-  <div class="field">
-    <%= f.label :genre_id %>
-    <%= f.collection_select( :genre_id, Genre.all, :id, :name ) %>
+<div class='container'>
+  <div class='row'>
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+  		<h3>Editing Book</h3>
+  		<%= render 'layouts/errors', article: @article %>
+  	<%= form_with model: @article, url: article_path(@article.id), method: :patch do |f| %>
+    <div class="row">
+      <div class="col">
+        <h3>Title</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.text_field :title %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h3>Memo</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.text_area :text %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="field">
+          <%= f.label :genre_id %>
+          <%= f.collection_select( :genre_id, Genre.all, :id, :name ) %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div id="elem_<%= @article.id %>"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= f.submit "編集内容を保存", class: "btn btn-outline-secondary", style: "width:200px" %>
+      </div>
+    </div>
+    <% end %>
+    <script>
+    // 指定したIDに対応する、DOM要素を取得する
+    var element = document.getElementById('elem_<%= @article.id %>');
+    var option =  {
+      starOn: "<%= asset_path('star-on.png') %>",
+      starOff: "<%= asset_path('star-off.png') %>",
+      score: "<%= @article.rate %>",
+      readOnly: false,
+    };
+    raty(element, option);
+    </script>
+    </div>
   </div>
-
-  <%= f.submit '保存' %>
-
-<% end %>
+</div>

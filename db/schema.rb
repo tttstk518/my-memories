@@ -60,8 +60,7 @@ ActiveRecord::Schema.define(version: 2023_01_12_103437) do
     t.string "text"
     t.string "title"
     t.integer "user_id", null: false
-    t.string "image"
-    t.string "genre_id", null: false
+    t.integer "genre_id", null: false
   end
 
   create_table "comments", force: :cascade do |t|

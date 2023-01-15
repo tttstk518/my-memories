@@ -1,0 +1,13 @@
+<div id="elem_<%= article.id %>"></div>
+
+<script>
+// 指定したIDに対応する、DOM要素を取得する
+var element = document.getElementById('elem_<%= article.id %>');
+var option =  {
+  starOn: "<%= asset_path('star-on.png') %>",
+  starOff: "<%= asset_path('star-off.png') %>",
+  score: "<%= article.rate %>",
+  readOnly: true,
+};
+raty(element, option);
+</script>

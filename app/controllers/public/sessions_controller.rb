@@ -6,6 +6,20 @@ class Public::SessionsController < Devise::SessionsController
   # def new
   #   super
   # end
+  #before_action :reject_user, only: [:create]
+  protected
+  # 会員の論理削除のための記述。退会後は同じアカウントでは利用不可
+  def reject_user
+    @user = User.find_by(email: params[:user][:email])
+    if @user
+      if @user.valid_password?(params[:user][:password]) && (@user.is_deleted == false)
+        flash[:notice] = "退会済みです。"
+        redirect_to new_user_registration_path
+      else
+        flash[:notice] = "必須項目を入力してください。"
+      end
+    end
+  end
 
   # POST /resource/sign_in
   # def create

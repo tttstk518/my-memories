@@ -8,8 +8,7 @@ class CreateArticles < ActiveRecord::Migration[6.1]
       t.string :text, nill: false
       t.string :title, nill: false
       t.integer :user_id, null: false
-      t.string :image, nill: false
-      t.string :genre_id, null: false
+      t.integer :genre_id, null: false
     end
   end
 end

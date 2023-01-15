@@ -1,6 +1,40 @@
-<h2>タイトル</h2>
-<p><%= @article.title %></p>
-<h2>本文</h2>
-<p><%= @article.text %></p>
-<p><%= @genre.name %></p>
-<%= link_to "編集", edit_article_path(@article.id) %>
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-3'>
+      <h2 class="mt-3">New</h2>
+      <%= render 'form', article: Article.new %>
+    </div>
+    <div class='col-md-8 offset-md-1'>
+  	  <h2>Book detail</h2>
+  	  <table class='table'>
+  	    <thead>
+  	      <tr>
+  	        <th>User Name</th>
+  	        <th>Title</th>
+  	        <th>Memo</th>
+  	        <th>Genre</th>
+  	        <th>Review</th>
+  	      </tr>
+  	    </thead>
+  	    <tbody class="table">
+          <tr>
+            <td><%= @article.user.name %></td>
+            <td><%= @article.title %></td>
+            <td><%= @article.text %></td>
+            <td><%= @article.genre.name %></td>
+            <td><%= render "static_rate", article: @article %></td>
+            <% if @article.favorited_by?(current_user) %>
+              <td><%= link_to "ブックマークを外す", article_favorites_path(@article), method: :delete %></td>
+            <% else %>
+              <td><%= link_to "ブックマーク", article_favories_path(@article), method: :post %></td>
+            <% end %>
+            <% if @article.user == current_user %>
+              <td><%= link_to 'Edit', edit_article_path(@article), class: "btn btn-sm btn-success edit_book_#{@article.id}" %></td>
+              <td><%= link_to 'Destroy', article_path(@article.id), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %></td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

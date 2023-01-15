@@ -21,6 +21,9 @@
         </tr>
       </table>
       <%= link_to "編集する", users_edit_path %>
+      <% if user_signed_in? && @user.id == current_user.id %>
+      	<%= link_to "退会", users_check_path %>
+      <% end %>
     </div>
   </div>
 </div>

@@ -1,2 +1,24 @@
-<h1>Public::Users#check</h1>
-<p>Find me in app/views/public/users/check.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="row mt-5">
+        <div class="font-weight-bold mx-auto">本当に退会しますか？</div>
+      </div>
+      <div class="row my-3">
+        <div class="mx-auto">
+          <p class="text-center">
+            退会すると、会員登録情報や<br>
+            これまでの購入履歴が閲覧できなくなります。<br>
+            退会する場合は、「退会する」をクリックして下さい。<br>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mx-auto">
+          <span class="mr-3"><%= link_to "退会しない", my_page_path(current_user), class: 'glyphicon glyphicon-home btn btn-outline-secondary', style: "width: 120px" %></span>
+          <%= link_to "退会する", withdrawal_path(current_user), method: :patch,  class: "glyphicon glyphicon-home btn btn-outline-secondary", style: "width: 120px" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
