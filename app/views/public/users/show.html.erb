@@ -1,7 +1,9 @@
 <div class="container">
-  <div class="row mt-3">
-    <div class="col offset-sm-1 col-sm-5">
+  <div class="row">
+    <div class="col-md3">
       <h4><%= @user.name %>さんの会員詳細</h4>
+    </div>
+    <div class='col-md-8 offset-md-1'>
       <table class="table table-borderless">
         <tr>
           <td>会員ID</td>
@@ -20,7 +22,7 @@
           <td><%= @user.introduction %></td>
         </tr>
       </table>
-      <%= link_to "編集する", users_edit_path %>
+      <%= link_to "編集する", users_edit_path(@user) %>
       <% if user_signed_in? && @user.id == current_user.id %>
       	<%= link_to "退会", users_check_path %>
       <% end %>

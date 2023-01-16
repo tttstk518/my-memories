@@ -8,14 +8,17 @@
       <div class="header_link">
         <div class="d-grid gap-2 d-md-block">
           <div class="float-right">
-            <%= link_to users_top_path,class: 'btn btn-secondary' do %>
-              my page
+            <%= link_to my_page_path(current_user.id),class: 'btn btn-secondary' do %>
+              Mypage
             <% end %>
-            <%#=  link_to favorites_path,class: 'btn btn-secondary' do %>
-              <!--favorites-->
-            <%# end %>
+            <%=  link_to root_path,class: 'btn btn-secondary' do %>
+              top
+            <% end %>
             <%=  link_to articles_path ,class: 'btn btn-secondary' do %>
-              articles
+              Articles
+            <% end %>
+            <%= link_to favorites_path(current_user.id),class: 'btn btn-secondary' do %>
+              BookMark
             <% end %>
             <%= link_to destroy_user_session_path, method: :delete,class: 'btn btn-secondary' do %>
               logout
@@ -27,13 +30,10 @@
               my page
             <% end %>
             <%=  link_to admin_users_path,class: 'btn btn-secondary' do %>
-              users
+              Users
             <% end %>
-            <%#= link_to admin_favorites_path,class: 'btn btn-secondary' do %>
-              <!--favorites-->
-            <%# end %>
             <%=  link_to admin_genres_path,class: 'btn btn-secondary' do %>
-              genres
+              Genres
             <% end %>
             <%= link_to destroy_admin_session_path, method: :delete,class: 'btn btn-secondary' do %>
               logout
@@ -45,13 +45,13 @@
                 About
               <% end %>
               <%= link_to users_guest_sign_in_path, method: :post,class: 'btn btn-secondary' do %>
-                guest login
+                Guest login
               <% end %>
               <%= link_to new_user_registration_path,class: 'btn btn-secondary' do %>
-                sign up
+                Sign up
               <% end %>
               <%= link_to new_user_session_path ,class: 'btn btn-secondary' do %>
-                sign in
+                Sign in
               <% end %>
             <div>
             </div>

@@ -25,10 +25,9 @@ class Public::FavoritesController < ApplicationController
   end
 
   def index
-    @favorites = Favorite.where(user_id: current_user.id)
+    
   end
 
   def show
-    @article = Article.find(params[:article_id])
   end
 end

@@ -7,7 +7,7 @@ class Public::ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     @article.user_id = current_user.id
-    @article.is_deleted = false # 表示／非表示フラグ
+    # @article.is_deleted = false # 表示／非表示フラグ
     @article.rate = params[:score] # レビュー用
     if @article.save
       redirect_to  articles_path(@article), notice: "You have created book successfully."
@@ -17,10 +17,26 @@ class Public::ArticlesController < ApplicationController
     end
   end
 
+  def search
+    @articles = Article.search(params[:keyword])
+    @keyword = params[:keyword]
+    render "index"
+  end
+
   def index
     @article = Article.new
-    @articles = Article.all
+    @articles = Article.published
     @genre = Genre.all
+
+    if params[:latest]
+      @articles = Article.latest
+    elsif params[:old]
+      @articles = Article.old
+    elsif params[:star_count]
+      @articles = Article.rate_count
+    else
+      @article = Article.published
+    end
   end
 
   def show
@@ -60,6 +76,7 @@ class Public::ArticlesController < ApplicationController
       :genre_id,
       :image,
       :rate,
+      :is_deleted
       )
   end
 end

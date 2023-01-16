@@ -1,10 +1,14 @@
 <h1>プロフィール編集</h1>
-<%= form_with model: @user, url: users_update_path(@user.id) do |f| %>
+<% if @user.email == 'guest@example.com'%>
+  <p>ゲストユーザーはユーザー情報の編集ができません。</p>
+<% else %>
+<% end %>
+<%= form_with model: @user, url: users_update_path(@user.id), method: :patch do |f| %>
   <label for="inputName">Name</label>
   <%= f.text_field :name, autofocus: true, id:"inputName", placeholder:"名前"%>
   <label for="inputEmail">email</label>
   <%= f.email_field :email, autofocus: true, id:"inputEmail", placeholder:"メールアドレス" %>
   <label for="inputIntroduction">introduction</label>
   <%= f.text_field :introduction, autofocus: true, id:"inputIntroduction", placeholder:"自己紹介" %>
-  <%= f.submit "変更を保存" %>
+  <%= f.submit "変更を保存", class: "btn btn-outline-secondary", style: "width:200px" %>
 <% end %>

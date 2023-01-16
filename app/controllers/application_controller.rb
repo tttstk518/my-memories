@@ -3,11 +3,11 @@ class ApplicationController < ActionController::Base
 
   #サインイン後の遷移先を指定する方法
   def after_sign_up_path_for(resource)
-      users_top_path(current_user.id)
+      root_path(current_user.id)
   end
 
   def after_sign_in_path_for(resource)
-    users_top_path
+    root_path
   end
 
   private

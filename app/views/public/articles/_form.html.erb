@@ -4,34 +4,43 @@
         <%= f.collection_select( :genre_id, Genre.all, :id, :name ) %>
       </div>
       <div class="form-group row">
-        <%= f.label :title, 'タイトル', class:'col-md-3 col-form-label' %>
+        <%= f.label :title, 'Title', class:'col-md-3 col-form-label' %>
         <div class="col-md-9">
           <%= f.text_field :title, class: "form-control" %>
         </div>
       </div>
       <!-- 評価 -->
       <div class="form-group row" id="star">
-        <%= f.label :rate,'評価 ', class:'col-md-3 col-form-label' %>
+        <%= f.label :rate,'Review', class:'col-md-3 col-form-label' %>
         <%= f.hidden_field :rate, id: :review_star %>
       </div>
-      <!-- 評価javascript -->
-
       <div class="form-group row">
-        <%= f.label :text, '口コミ内容', class:'col-md-3 col-form-label' %>
+        <%= f.label :text, 'Memo', class:'col-md-3 col-form-label' %>
         <div class="col-md-9">
           <%= f.text_area :text, class: "form-control", rows: "8",
-           placeholder:'口コミ内容がなくても、タイトルと評価のみで投稿できます。投稿してから編集もできますよ！' %>
+           placeholder:'TitleとReviewのみで投稿できます。投稿してから編集もできます！' %>
         </div>
       </div>
       <div class="form-group row">
         <%= f.file_field :image, accept: "image/*" %>
+      </div>
+      <div class="form-group row">
+        <div>
+          <%= f.label :is_deleted, "公開", value: true %>
+          <%= f.radio_button :is_deleted, 'true' %>
+        </div>
+        <div>
+          <%= f.label :is_deleted, "非公開", value: false %>
+          <%= f.radio_button :is_deleted,'false' %>
+        </div>
       </div>
       <div class="form-group row justify-content-end">
         <div class="col-md-9">
           <%= f.submit class: 'btn btn-success' %>
         </div>
       </div>
-<% end %>     
+<% end %>
+<!-- 評価javascript -->
 <script>
 // 13行目のidが'star'のDOM要素の取得
 var element = document.getElementById('star');

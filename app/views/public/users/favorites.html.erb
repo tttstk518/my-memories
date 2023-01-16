@@ -1,0 +1,25 @@
+<div class="col-md8 offset-md-1">
+      <caption>Favorites</caption>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Memo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @favorites.each do |favorite| %>
+            <tr>
+              <td><%= favorite.article.user.name %></td>
+              <td>
+                <%= link_to article_path(favorite.article) do %>
+                  <%= favorite.article.title %>
+                <% end %>
+              </td>
+              <td><%= favorite.article.text %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>

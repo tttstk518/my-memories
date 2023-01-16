@@ -20,6 +20,16 @@ class Public::SessionsController < Devise::SessionsController
       end
     end
   end
+  
+  def after_sign_in_path_for(resource)
+      users_top_path(current_user.id)
+  end
+
+  def guest_sign_in
+    user = User.guest
+    sign_in user
+    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
+  end
 
   # POST /resource/sign_in
   # def create

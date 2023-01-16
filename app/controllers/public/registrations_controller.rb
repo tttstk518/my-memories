@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 class Public::RegistrationsController < Devise::RegistrationsController
+  before_action :ensure_general_user, only: [:update, :destroy]
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
-
+  def ensure_general_user
+    if resource.email == "guest@example.com"
+      redirect_to root_path, alert: "ゲストユーザーの変更・削除はできません"
+    end
+  end
   # GET /resource/sign_up
   # def new
   #   super
@@ -59,4 +64,8 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+  
+  def update_resource(resource, params)
+    resource.update_without_password(params)
+  end
 end

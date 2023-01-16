@@ -39,6 +39,14 @@
     </div>
     <div class="row">
       <div class="col">
+        <%= f.label :is_deleted, "公開", value: true %>
+        <%= f.radio_button :is_deleted, 'true' %>
+        <%= f.label :is_deleted, "非公開", value: false %>
+        <%= f.radio_button :is_deleted,'false' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <%= f.submit "編集内容を保存", class: "btn btn-outline-secondary", style: "width:200px" %>
       </div>
     </div>

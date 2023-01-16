@@ -8,7 +8,6 @@ Rails.application.routes.draw do
     post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
   end
 
-  resources :comments
   namespace :admin do
     get 'top' => 'homes#top', as: 'top'
     resources :users, only: [:index, :show, :edit, :update]
@@ -17,25 +16,31 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
     end
   end
+
   scope module: :public do
     root to: 'homes#top'
     get 'about' => 'homes#about', as: 'about'
+
     resources :articles
-    get 'users/index' => 'users#index', as: 'users_top'
-    get 'users/my_page' => 'users#show', as: 'my_page'
-    get 'users/edit' => 'users#edit', as: 'users_edit'
-    patch 'users/update' => 'users#update', as: 'users_update'
+
+    # get 'users/index' => 'users#index', as: 'users_top'
+    get 'users/:id' => 'users#show', as: 'my_page'
+    get 'users/:id/edit' => 'users#edit', as: 'users_edit'
+    patch 'users/:id' => 'users#update', as: 'users_update'
     get 'users/check' => 'users#check', as: 'users_check'
     patch "/users/:id/withdrawal" => "users#withdrawal", as: 'withdrawal'
+    get 'users/:id/favorites' => 'users#favorites', as: 'favorites'
+    get 'search' => 'articles#search'
     resources :articles, except: [:index] do
-    resource :favorites, only: [:create, :destroy, :show, :index]
+      resources :favorites, only: [:create, :destroy, :show]
     end
   end
+
   #会員用
   # URL /customers/sign_in ...
-  devise_for :users, skip: [:passwords], controllers: {
+  devise_for :users, controllers: {
   registrations: "public/registrations",
-  sessions: 'public/sessions'
+  passwords: 'users/passwords'
   }
   # 管理者用
   # URL /admin/sign_in ...
