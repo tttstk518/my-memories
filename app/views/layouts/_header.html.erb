@@ -1,65 +1,71 @@
-<header style="height: 90px;">
-  <div class="container-fluid" style="">
-    <div class="row m-auto pr-2">
-      <% if user_signed_in? %>
-      <div class="col">
-        <div>ようこそ、<%= current_user.name %> さん！</div>
+<header class="shadow-sm ">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <!--navbarナビゲーションバーの表示-->
+    <!--navbar-expand-[ブレークポイント]指定した画面幅に応じて切り替える-->
+    <div class="container">
+      <div class="object-fit: cover;">
+        <a class="navbar-brand" href="/"><%= image_tag'logo.png', size: "250x100" %></a>
       </div>
-      <div class="header_link">
-        <div class="d-grid gap-2 d-md-block">
-          <div class="float-right">
-            <%= link_to my_page_path(current_user.id),class: 'btn btn-secondary' do %>
-              Mypage
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav mr-auto">
+        <% if user_signed_in? %>
+          <div class="mx-auto" style="width: 200px;">welcome.<%= current_user.name %></div>
+          <li class="nav-item ml-5">
+            <%= link_to my_page_path(current_user.id), class: "text-dark" do %>
+              <i class="far fa-id-card fa-lg"></i>account
             <% end %>
-            <%=  link_to root_path,class: 'btn btn-secondary' do %>
-              top
+          </li>
+          <li class="nav-item ml-5 ">
+            <%=  link_to users_top_path(current_user.id), class: "text-dark" do %>
+              <i class="far fa-user fa-lg"></i>my page
             <% end %>
-            <%=  link_to articles_path ,class: 'btn btn-secondary' do %>
-              Articles
+          </li>
+          <li class="nav-item ml-5">
+            <%=  link_to articles_path, class: "text-dark" do %>
+              <i class="fas fa-users fa-lg"></i>articles
             <% end %>
-            <%= link_to favorites_path(current_user.id),class: 'btn btn-secondary' do %>
-              BookMark
+          </li>
+          <li class="nav-item ml-5">
+            <%= link_to favorites_path(current_user.id), class: "text-dark" do %>
+              <i class="fas fa-bookmark fa-lg"></i>bookmark
             <% end %>
-            <%= link_to destroy_user_session_path, method: :delete,class: 'btn btn-secondary' do %>
-              logout
-            <% end %>
-          </div>
-          <% elsif admin_signed_in? %>
-          <div class="float-right">
-            <%= link_to admin_top_path,class: 'btn btn-secondary' do %>
-              my page
-            <% end %>
-            <%=  link_to admin_users_path,class: 'btn btn-secondary' do %>
-              Users
-            <% end %>
-            <%=  link_to admin_genres_path,class: 'btn btn-secondary' do %>
-              Genres
-            <% end %>
-            <%= link_to destroy_admin_session_path, method: :delete,class: 'btn btn-secondary' do %>
-              logout
-            <% end %>
-          </div>
-          <% else %>
-            <div class="float-right">
-              <%= link_to about_path,class: 'btn btn-secondary' do %>
-                About
-              <% end %>
-              <%= link_to users_guest_sign_in_path, method: :post,class: 'btn btn-secondary' do %>
-                Guest login
-              <% end %>
-              <%= link_to new_user_registration_path,class: 'btn btn-secondary' do %>
-                Sign up
-              <% end %>
-              <%= link_to new_user_session_path ,class: 'btn btn-secondary' do %>
-                Sign in
-              <% end %>
-            <div>
-            </div>
-            </div>
+          </li>
+          <li class="nav-item ml-5">
+          <%= link_to destroy_user_session_path, method: :delete, class: "text-dark" do %>
+            <i class="fas fa-sign-out-alt fa-lg"></i>logout
           <% end %>
-        </div>
-        <span class="botder border-dark"></span>
+          </li>
+          <% elsif admin_signed_in? %>
+            <li class="nav-item ml-5">
+              <%= link_to admin_top_path, class: "text-dark" do %>
+                <i class="fas fa-user-circle fa-lg"></i>articles
+              <% end %>
+            </li>
+            <li class="nav-item ml-5">
+              <%=  link_to admin_users_path, class: "text-dark" do %>
+                <i class="fas fa-id-card fa-lg"></i>users
+              <% end %>
+            </li>
+            <li class="nav-item ml-5">
+              <%=  link_to admin_genres_path, class: "text-dark" do %>
+                <i class="fas fa-tags fa-lg"></i>genres
+              <% end %>
+            </li>
+            <li class="nav-item ml-5">
+              <%= link_to destroy_admin_session_path, method: :delete, class: "text-dark" do %>
+                <i class="fas fa-sign-out-alt fa-lg"></i>logout
+              <% end %>
+            </li>
+          <% else %>
+            <li class="nav-item ml-5">
+              <%= link_to "About", about_path,class: 'text-dark' %>
+            </li>
+        <% end %>
+        </ul>
       </div>
     </div>
-  </div>
+  </nav>
 </header>

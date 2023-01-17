@@ -1,26 +1,35 @@
 <div class="container">
-  <div class="row mt-3">
-    <div class="col offset-sm-1 col-sm-5">
-      <h4><%= @user.name %>さんの会員詳細</h4>
-      <table class="table table-borderless">
-        <tr>
-          <td>会員ID</td>
-          <td><%= @user.id %></td>
-        </tr>
-        <tr>
-          <td>名前</td>
-          <td><%= @user.name %></td>
-        </tr>
-        <tr>
-          <td>メールアドレス</td>
-          <td><%= @user.email %></td>
-        </tr>
-        <tr>
-          <td>紹介文</td>
-          <td><%= @user.introduction %></td>
-        </tr>
-      </table>
-      <%= link_to "編集する", edit_admin_user_path %>
+  <div class="row">
+    <div class="col">
+      <div class="row mt-5">
+        <div class="font-weight-bold mx-auto"><%= @user.name %>さんの会員詳細</div>
+      </div>
+      <div class="row my-3 ml-5">
+        <div class="mx-auto">
+          <table class="table table-borderless">
+            <tr>
+              <td>User ID</td>
+              <td><%= @user.id %></td>
+            </tr>
+            <tr>
+              <td>Name</td>
+              <td><%= @user.name %></td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td><%= @user.email %></td>
+            </tr>
+            <tr>
+              <td>Created.at</td>
+              <td><%= @user.created_at.strftime('%Y/%m/%d') %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    <div class="row">
+      <div class="mx-auto">
+        <%= link_to "edit", edit_admin_user_path,class: "btn btn-outline-secondary", style: "width:70px" %>
+      </div>
     </div>
   </div>
 </div>

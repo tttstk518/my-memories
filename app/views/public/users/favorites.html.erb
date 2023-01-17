@@ -1,25 +1,53 @@
-<div class="col-md8 offset-md-1">
-      <caption>Favorites</caption>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Title</th>
-            <th>Memo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @favorites.each do |favorite| %>
-            <tr>
-              <td><%= favorite.article.user.name %></td>
-              <td>
-                <%= link_to article_path(favorite.article) do %>
-                  <%= favorite.article.title %>
-                <% end %>
-              </td>
-              <td><%= favorite.article.text %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+<div class="container">
+  <div class="row">
+    <div class='ml-3 mt-3'>
+      <%= link_to favorites_path(id: current_user.id, latest: "true", genre_id: params[:genre_id].blank? ? nil : params[:genre_id]),class: "text-dark" do %>
+        <i class="fas fa-sort-numeric-down fa-lg"></i>
+      <% end %>
     </div>
+    <p class="ml-3 mt-3">|</p>
+    <div class='ml-3 mt-3'>
+      <%= link_to favorites_path(id: current_user.id, old: "true", genre_id: params[:genre_id].blank? ? nil : params[:genre_id]),class: "text-dark" do %>
+        <i class="fas fa-sort-numeric-up-alt fa-lg"></i>
+      <% end %>
+    </div>
+    <p class="ml-3 mt-3">|</p>
+    <div class='ml-3 mt-3'>
+      <%= link_to favorites_path(id: current_user.id, star_count: "true", genre_id: params[:genre_id].blank? ? nil : params[:genre_id]),class: "text-dark" do %>
+        <i class="fas fa-thumbs-up fa-lg"></i>
+      <% end %>
+    </div>
+    <div class="search-form ml-3 mt-3">
+      <%= form_with url: favorites_path, method: :get, local: true do |f| %>
+        <%= f.collection_select( :genre_id, Genre.all, :id, :name ) %>
+        <%= f.submit class: 'btn btn-secondary btn-sm'%>
+      <% end %>
+    </div>
+    <p class="h4 ml-4 mt-3">Bookmark</p>
+  </div>
+  <div class="text-right mb-3">
+    <%= link_to new_article_path, class: "text-dark" do %>
+      <i class="fas fa-pencil-alt fa-2x"></i>
+    <% end %>
+  </div>
+  <div class="row">
+    <% @articles.each do |article| %>
+      <div class='col-md-4 mx-auto'>
+        <div style="padding: 15px; background: #ffffff ">
+          <div class="text-center">
+            <%= link_to article_path(article),class: "text-dark" do %>
+              <% if article.image.attached? %>
+                <%= image_tag article.image, class: 'img-fluid', style: 'width: 100%; height: 200px; object-fit: cover;' %>
+              <% else %>
+                <%= image_tag 'no_image.png',class: 'img-fluid', style: 'width: 100%; height: 200px; object-fit: cover;' %>
+              <% end %>
+            <% end %><br>
+          </div>
+        </div>
+        <p class="small text">
+        <%= article.title %>
+        <%= article.genre.name %><br></p>
+      </div>
+    <% end %>
+  </div>
+</div>

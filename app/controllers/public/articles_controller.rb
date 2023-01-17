@@ -12,14 +12,24 @@ class Public::ArticlesController < ApplicationController
     if @article.save
       redirect_to  articles_path(@article), notice: "You have created book successfully."
     else
-      @articles = Article.all
-      render 'index'
+      render :new
     end
   end
 
   def search
-    @articles = Article.search(params[:keyword])
-    @keyword = params[:keyword]
+    @genres = Genre.find(params[:genre_id])
+    #@keyword = params[:keyword]
+
+    if params[:latest]
+      @articles = @genres.articles.latest
+    elsif params[:old]
+      @articles = @genres.articles.old
+    elsif params[:star_count]
+      @articles = @genres.articles.rate_count
+    else
+      @articles = @genres.articles.published
+    end
+
     render "index"
   end
 
@@ -28,14 +38,27 @@ class Public::ArticlesController < ApplicationController
     @articles = Article.published
     @genre = Genre.all
 
-    if params[:latest]
-      @articles = Article.latest
-    elsif params[:old]
-      @articles = Article.old
-    elsif params[:star_count]
-      @articles = Article.rate_count
+    unless params[:genre_id].blank?
+      @genres = Genre.find(params[:genre_id])
+      if params[:latest]
+        @articles = @genres.articles.published.latest
+      elsif params[:old]
+        @articles = @genres.articles.published.old
+      elsif params[:star_count]
+        @articles = @genres.articles.published.rate_count
+      else
+        @articles = @genres.articles.published.published
+      end
     else
-      @article = Article.published
+      if params[:latest]
+        @articles = Article.published.latest
+      elsif params[:old]
+        @articles = Article.old
+      elsif params[:star_count]
+        @articles = Article.published.rate_count
+      else
+        @articles = Article.published.published
+      end
     end
   end
 
@@ -46,13 +69,13 @@ class Public::ArticlesController < ApplicationController
   def edit
     @article = Article.find(params[:id])
 
-    @article.rate = params[:score]
+    # @article.rate = params[:score]
     # 編集リンクから飛んできたときのparamsに格納されたidを元に、該当する投稿データを探して、変数に代入
   end
 
   def update
     @article = Article.find(params[:id])
-    @article.rate = params[:score]
+    # @article.rate = params[:score]
     # 編集ページの送信ボタンから飛んできたときのparamsに格納されたidを元に、該当する投稿データを探して、変数に代入
     if @article.update(article_params)
       redirect_to article_path(@article.id),notice: "You have updated book successfully."

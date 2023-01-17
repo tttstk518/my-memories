@@ -1,6 +1,7 @@
 class Article < ApplicationRecord
     belongs_to :user
-    belongs_to :genre, dependent: :destroy
+    belongs_to :genre
+
 
     has_one_attached :image
 
@@ -23,11 +24,11 @@ class Article < ApplicationRecord
     scope :latest, -> {order(created_at: :desc)}
     #orderデータの取り出し、Latest任意の名前で定義
     scope :old, -> {order(created_at: :asc)}
-    scope :rate_count, -> {order(star: :desc)}
+    scope :rate_count, -> {order(rate: :desc)}
 
     validates :title,presence:true
     validates :text,presence:true,length:{maximum:200}
-    validates :is_deleted, presence: true
+    validates :is_deleted, inclusion: [true, false]
     validates :rate, numericality: {
     less_than_or_equal_to: 5,
     greater_than_or_equal_to: 1

@@ -1,25 +1,26 @@
-<h1>管理者ページ</h1>
-<table class="table">
-  <thead>
-    <tr class="table">
-      <th>会員番号</th>
-      <th>名前</th>
-      <th>メールアドレス</th>
-    </tr>
-  </thead>
-  <tbody class="table">
-    <% @user.each do |user| %>
-    <tr>
-      <td><%= user.id %></td>
-      <td>
-        <%= link_to admin_user_path(user.id) do %>
-          <%= user.name %>
-        <% end %>
-      </td>
-      <td><%= user.email %></td>
-    </tr>
+<div class='container'>
+　<div class="row">
+    <% @articles.each do |article| %>
+      <div class='col-md-4 mx-auto'>
+        <div style="padding: 15px; background: #ffffff ">
+          <div class="text-center">
+            <%= link_to article_path(article.id),style: "color:#464e54;" do %>
+              <% if article.image.attached? %>
+                <%= image_tag article.image, class: 'img-fluid', style: 'width: 100%; height: 200px; object-fit: cover;' %>
+              <% else %>
+                <%= image_tag 'no_image.png', class: 'img-fluid', style: 'width: 100%; height: 200px; object-fit: cover;' %>
+              <% end %>
+            <% end %><br>
+          </div>
+        </div>
+        <p class="small m-0">
+          <%= article.title %>
+          <%= article.genre.name %><br>
+          <p class="small text-danger">
+          <%= article.is_deleted ? 'open' : 'private' %></p>
+        </p>
+      </div>
     <% end %>
-  </tbody>
-</table>
-<%= link_to "ジャンル", admin_genres_path %>
-<%= link_to "会員一覧", admin_users_path %>
+  </div>
+</div>
+<%= paginate @articles %>

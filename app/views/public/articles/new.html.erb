@@ -1,0 +1,63 @@
+<div class='container text-center'>
+  <div class='row justify-content-center'>
+    <%= form_with model: Article.new do |f| %>
+    <%= render 'layouts/error_messages', article: @article %>
+      <div class='col'>
+        <div class="form-group row">
+          <%= f.label :title, 'Title', class: 'col-md-3 col-form-label' %>
+          <%= f.text_field :title, class: "form-control" %>
+        </div>
+      </div>
+      <div class='col'>
+        <!-- 評価 -->
+        <div class="form-group row" id="star">
+          <%= f.label :rate,'Review', class:'col-md-3 col-form-label' %>
+          <%= f.hidden_field :rate, id: :review_star %>
+        </div>
+      </div>
+      <div class='col'>
+        <div class="form-group row">
+          <%= f.label :text, 'Memo', class:'col-md-3 col-form-label' %>
+          <%= f.text_area :text, class: "form-control", rows: "8",
+             placeholder:'edit your memories' %>
+        </div>
+      </div>
+      <div class='col'>
+         <div class="form-group row">
+          <%= f.label :genre_id, class: "ml-3 mr-2" %>
+          <%= f.collection_select( :genre_id, Genre.all, :id, :name ) %>
+        </div>
+      </div>
+      <div class='col'>
+        <div class="form-group row">
+          <%= f.file_field :image, accept: "image/*" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class='col'>
+          <%= f.label :is_deleted, "公開", value: true %>
+          <%= f.radio_button :is_deleted, 'true', class: "mr-2" %>
+        </div>
+        <div class='col'>
+          <%= f.label :is_deleted, "非公開", value: false %>
+          <%= f.radio_button :is_deleted, 'false', class: "ml-2" %>
+        </div>
+      </div>
+      <div class='col'>
+        <div class="form-group row justify-content-end">
+          <%= f.submit class: 'btn btn-secondary' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+  <!-- 評価javascript -->
+  <script>
+  // 13行目のidが'star'のDOM要素の取得
+  var element = document.getElementById('star');
+  var option = {
+    starOn: "<%= asset_path('star-on.png') %>",
+    starOff: "<%= asset_path('star-off.png') %>"
+  };
+  raty(element,option);
+  </script>

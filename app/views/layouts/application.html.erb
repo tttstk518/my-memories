@@ -10,11 +10,12 @@
  </head>
  <body>
   <%= render 'layouts/header' %>
-  <main>
-   <p id="notice"><%= notice %></p>
+  <main style="background-color:#DDDDDD;">
+   <% if notice.present? %>
+     <p id="notice"><%= notice %></p>
+   <% end %>
    <%= yield %>
   </main>
    <%= render 'layouts/footer' %>
   </body>
-  <footer></footer>
 </html>

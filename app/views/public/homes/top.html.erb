@@ -1,5 +1,19 @@
-<div class="btn-wrapper col-10 mx-auto">
-  <div class="row">
-   ようこそ！
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col-sm col-md-6 mt-5 mb-5">
+      <p align="center">
+        Welcome to My Memories homepage!<br>
+        First of all,please register as a new member or<br>
+        log in as a guest, and enjoy your own Memories!<br>
+      </p>
+      <div class="justify-content align-items-center text-center">
+        <%= link_to "Sign up", new_user_registration_path, class: "btn btn-dark rounded-0" %>
+        <%= link_to "Sign in", new_user_session_path ,class: "btn btn-light rounded-0 ml-4 mr-4" %>
+        <%= link_to "Gest login", users_guest_sign_in_path, method: :post, class: "btn btn-dark rounded-0" %>
+      </div>
+    </div>
+    <div class="col-sm col-md-6 mt-5 mb-5">
+      <%= image_tag 'top.png', class: "img-fluid" %>
+    </div>
   </div>
 </div>

@@ -1,31 +1,43 @@
 <div class="container">
   <div class="row">
-    <div class="col-md3">
-      <h4><%= @user.name %>さんの会員詳細</h4>
-    </div>
-    <div class='col-md-8 offset-md-1'>
-      <table class="table table-borderless">
-        <tr>
-          <td>会員ID</td>
-          <td><%= @user.id %></td>
-        </tr>
-        <tr>
-          <td>名前</td>
-          <td><%= @user.name %></td>
-        </tr>
-        <tr>
-          <td>メールアドレス</td>
-          <td><%= @user.email %></td>
-        </tr>
-        <tr>
-          <td>紹介文</td>
-          <td><%= @user.introduction %></td>
-        </tr>
-      </table>
-      <%= link_to "編集する", users_edit_path(@user) %>
-      <% if user_signed_in? && @user.id == current_user.id %>
-      	<%= link_to "退会", users_check_path %>
-      <% end %>
+    <div class="col">
+      <div class="row mt-5">
+        <div class="font-weight-bold mx-auto"><%= @user.name %>さんの会員詳細</div>
+      </div>
+      <div class="row my-3 ml-5">
+        <div class="mx-auto">
+          <table class="table table-borderless">
+            <tr>
+              <td>UserID</td>
+              <td><%= @user.id %></td>
+            </tr>
+            <tr>
+              <td>Name</td>
+              <td><%= @user.name %></td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td><%= @user.email %></td>
+            </tr>
+            <tr>
+              <td>Created.at</td>
+              <td><%= @user.created_at.strftime('%Y/%m/%d') %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mx-auto">
+          <span class="mr-3">
+            <% if current_user.email!='guest@example.com' %>
+            <%= link_to "Edit", users_edit_path(@user),class: "btn btn-outline-secondary", style: "width:70px" %>
+            <% if user_signed_in? && @user.id == current_user.id %>
+            	<%= link_to "退会", users_check_path,class: "btn btn-outline-secondary ml-3", style: "width:70px" %>
+            <% end %>
+            <% end %>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

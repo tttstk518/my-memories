@@ -1,6 +1,7 @@
 class Admin::HomesController < ApplicationController
   def top
-    @user = User.page(params[:page]).per(10)
+    @articles = Article.page(params[:page]).per(10)
+    @genre = Genre.all
   end
 
   private
@@ -8,4 +9,5 @@ class Admin::HomesController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :is_deleted)
   end
+
 end

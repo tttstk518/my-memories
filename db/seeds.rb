@@ -5,6 +5,9 @@ Admin.create!(
    email: 'tttstk518@gmail.com',
    password: 'tatsuta5018'
 )
+
+ Genre.create!(
+    [{ name: '居酒屋' }, { name: '本' }])
 # Examples:
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])

@@ -1,41 +1,56 @@
 <div class='container'>
-  <div class='row'>
-    <div class='col-md-3'>
-      <h2 class="mt-3">New</h2>
-      <%= render 'form', article: Article.new %>
+  <div class='row align-items-center'>
+    <div class='col-sm col-md-6 text-center'>
+      <div class="font-weight-bold mx-auto mt-3">
+        <div class="mb-4 mt-4">
+          <%= render "static_rate", article: @article %>
+        </div>
+        <% if @article.image.attached? %>
+          <%= image_tag @article.image, class: 'img-fluid', style: 'width: 100%; height: 300px; object-fit: cover;' %>
+        <% else %>
+          <%= image_tag 'no_image.png', class: 'img-fluid', style: 'width: 100%; height: 300px; object-fit: cover;' %>
+        <% end %>
+        <% if @article.user == current_user %>
+          <%= link_to 'Edit', edit_article_path(@article), class: "btn btn-sm btn-light mt-3 mb-2" %>
+          <%= link_to 'Destroy', article_path(@article.id), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-dark mt-3 ml-3 mb-2" %>
+        <% end %>
+        <p class="text-dark mr-2">book mark<i class="fas fa-long-arrow-alt-right"></i>
+          <% if @article.favorited_by?(current_user) %>
+            <%= link_to article_favorite_path(@article), method: :delete, class: "text-dark ml-2" do %>
+              <i class="fas fa-bookmark"></i>
+            <% end %>
+          <% else %>
+            <%= link_to article_favorites_path(@article), method: :post, class: "text-dark ml-2" do %>
+              <i class="far fa-bookmark"></i>
+            <% end %>
+          <% end %>
+        </p>
+      </div>
     </div>
-    <div class='col-md-8 offset-md-1'>
-  	  <h2>Book detail</h2>
-  	  <%= link_to "ブックマーク一覧", article_favorites_path(@article) %>
-  	  <table class='table'>
-  	    <thead>
-  	      <tr>
-  	        <th>UserName</th>
-  	        <th>Title</th>
-  	        <th>Memo</th>
-  	        <th>Genre</th>
-  	        <th>Review</th>
-  	      </tr>
-  	    </thead>
-  	    <tbody class="table">
-          <tr>
-            <td><%= @article.user.name %></td>
-            <td><%= @article.title %></td>
-            <td><%= @article.text %></td>
-            <td><%= @article.genre.name %></td>
-            <td><%= render "static_rate", article: @article %></td>
-            <% if @article.favorited_by?(current_user) %>
-              <td><%= link_to "NoBookMark", article_favorite_path(@article), method: :delete %></td>
-            <% else %>
-              <td><%= link_to "BookMark", article_favorites_path(@article), method: :post %></td>
-            <% end %>
-            <% if @article.user == current_user %>
-              <td><%= link_to 'Edit', edit_article_path(@article), class: "btn btn-sm btn-success edit_book_#{@article.id}" %></td>
-              <td><%= link_to 'Destroy', article_path(@article.id), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %></td>
-            <% end %>
-          </tr>
-        </tbody>
-      </table>
+    <div class="col-sm col-md-6 text-center">
+      <div class="list-004">
+        <div>
+          title<i class="fas fa-caret-right"></i><i class="fas fa-caret-right"></i>
+          <%= @article.title %>
+        </div>
+        <ul>
+          <li>
+            username　<i class="fas fa-user"></i>　<%= @article.user.name %>
+          </li>
+          <li>
+            genre　<i class="fas fa-angle-double-right"></i>　<%= @article.genre.name %>
+          </li>
+          <li>
+            created　<i class="fas fa-angle-double-right"></i>　<%= @article.created_at.strftime('%Y/%m/%d') %>
+          </li>
+        </ul>
+      </div>
+      <div class="list-005 mt-3">
+        <div>memo</div>
+          <ul>
+            <li><%= @article.text %></li>
+          </ul>
+      </div>
     </div>
   </div>
 </div>

@@ -1,13 +1,67 @@
 class Public::UsersController < ApplicationController
-  # before_action :is_matching_login_user, only: [:edit, :update]
+  before_action :is_matching_login_user, only: [:edit, :update, :withdrawal]
+
+  def create
+    @article = Article.new(article_params)
+    @article.rate = params[:score] # レビュー用
+    if @article.save
+      redirect_to  users_top_path(current_user.id), notice: "You have created book successfully."
+    else
+      @articles = Article.all
+      render 'index'
+    end
+  end
+
+  def search
+    @genres = Genre.find(params[:genre_id])
+    #@keyword = params[:keyword]
+    @articles = @genres.articles
+    render "index"
+  end
 
   def index
+    @user = User.find(params[:id])
+    @articles = @user.articles
+    @genre = Genre.all
 
+    if params[:latest]
+      @articles = current_user.articles.latest
+    elsif params[:old]
+      @articles = current_user.articles.old
+    elsif params[:star_count]
+      @articles = current_user.articles.rate_count
+    else
+      @article = current_user.articles.published
+    end
   end
 
   def favorites
     @user = current_user
-    @favorites = Favorite.where(user_id: current_user.id)
+    favorite_article_ids = current_user.favorites.pluck(:article_id)
+    favorites = Article.where(id: favorite_article_ids)
+    @favorites = favorites.page(params[:page]).per(10)
+
+    unless params[:genre_id].blank?
+      if params[:latest]
+        @articles = favorites.published.where(genre_id: params[:genre_id]).latest
+      elsif params[:old]
+        @articles = favorites.published.where(genre_id: params[:genre_id]).old
+      elsif params[:star_count]
+        @articles = favorites.published.where(genre_id: params[:genre_id]).rate_count
+      else
+        @articles = favorites.published.where(genre_id: params[:genre_id]).published
+      end
+    else
+      if params[:latest]
+        @articles = favorites.published.latest
+      elsif params[:old]
+        @articles = favorites.published.old
+      elsif params[:star_count]
+        @articles = favorites.published.rate_count
+      else
+        @articles = favorites.published.published
+      end
+    end
   end
 
   def show
@@ -62,14 +116,24 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(
       :name,
       :email,
-      :introduction,
+      :is_deleted
       )
   end
 
   def is_matching_login_user
-    user_id = params[:id].to_i
-    unless user_id == current_user.id
+    if !user_signed_in?||current_user.email=='guest@example.com'
       redirect_to my_page_path
     end
+  end
+
+  def article_params
+    params.require(:article).permit(
+      :title,
+      :text,
+      :genre_id,
+      :image,
+      :rate,
+      :is_deleted
+      )
   end
 end

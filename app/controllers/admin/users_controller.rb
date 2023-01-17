@@ -1,12 +1,12 @@
 class Admin::UsersController < ApplicationController
+
   def index
-    @user = User.page(params[:page]).per(10)
+    @users = User.page(params[:page]).per(5)
   end
 
   def show
     @user = User.find(params[:id])
     #レコードを１件だけ取得するのでインスタンス変数名は単数形
-    #@articles = @user.articles
     #アソシエーションを持つモデル同士の既述
   end
 
@@ -23,12 +23,13 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  private
+
   def user_params
     params.require(:user).permit(
       :name,
       :email,
       :is_deleted,
-      :introduction,
       )
   end
 end
